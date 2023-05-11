@@ -1,5 +1,5 @@
 const { Client, Intents } = require("discord.js");
-require('dotenv').config();
+require("dotenv").config();
 const SUCCESS = [
   "https://tenor.com/view/better-call-saul-breaking-bad-fun-and-games-gus-fring-gustavo-fring-gif-26519843",
   "https://tenor.com/view/hector-gif-11253742",
@@ -11,7 +11,7 @@ const SUCCESS = [
   "https://tenor.com/view/breaking-bad-gif-25865354",
   "https://tenor.com/view/sigma-male-breaking-bad-walter-white-heisenberg-heisenberg-breaking-bad-gif-26002440",
   "https://tenor.com/view/breaking-bad-jesse-walter-white-sunset-gif-3427767",
-  "https://tenor.com/bWxeV.gif"
+  "https://tenor.com/bWxeV.gif",
 ];
 const FAILURE = [
   "https://tenor.com/view/breaking-bad-walter-white-gif-20348263",
@@ -22,8 +22,7 @@ const FAILURE = [
   "https://tenor.com/view/gus-gus-sus-giancarlo-esposito-gif-23328188",
   "https://tenor.com/view/frank-castle-wait-please-stop-please-no-please-gif-21133188",
 ];
-const channelId = '1076817001957294112'
-
+const channelId = "1088028866892791898";
 
 
 
@@ -33,38 +32,41 @@ const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-
-
-
-client.on("ready", () => {
-  console.log(client.user.tag);
-
+client.on("ready", async() => {
   client.user.setActivity("statuses of your builds", {
     type: "WATCHING",
-    
   });
+  // const channel = await client.channels.cache.get(channelId);
+  //   channel.messages.fetch({ limit: 5 }).then(messages => {
+  //     console.log(`Received ${messages.size} messages`);
+  //   //   messages.forEach(message => {
+  //   //     const status =
+  //   //   message.embeds[0].description &&
+  //   //   message.embeds[0].description.split("\n")[0].split(":")[1].trim();
+  //   // if (status === "SUCCESS" || status === "`SUCCESS`") {
+  //   //   message.reply(SUCCESS[Math.floor(Math.random() * SUCCESS.length)]);
+  //   // } else if (status === "FAILURE" || status === "`FAILURE`") {
+  //   //   message.reply(FAILURE[Math.floor(Math.random() * FAILURE.length)]);
+  //   // }
+  //     })
+  //     console.log("=============")
+  //   })
 });
 
-client.on("message", (message) => {
-  console.log()
-  
-    if(message.embeds[0]){
-      const status =
-    message.embeds[0].description &&
-    message.embeds[0].description.split("\n")[0].split(":")[1].trim()
-  if (status === "SUCCESS") {
-    message.reply(SUCCESS[Math.floor(Math.random() * SUCCESS.length)]);
-  } else if (status === "FAILURE") {
-    message.reply(FAILURE[Math.floor(Math.random() * FAILURE.length)]);
-  }
-    
-    
 
 
+client.on("message", async(message) => {
+  if (message.embeds[0]) {
+    const status =
+      message.embeds[0].description &&
+      message.embeds[0].description.split("\n")[0].split(":")[1].trim();
+    if (status === "SUCCESS" || status === "`SUCCESS`") {
+      message.reply(SUCCESS[Math.floor(Math.random() * SUCCESS.length)]);
+    } else if (status === "FAILURE" || status === "`FAILURE`") {
+      message.reply(FAILURE[Math.floor(Math.random() * FAILURE.length)]);
+    }
   }
- 
+
 });
 
-client.login(
-  process.env.DISCORD_TOKEN
-);
+client.login(process.env.DISCORD_TOKEN);
